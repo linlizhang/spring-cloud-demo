@@ -1,0 +1,26 @@
+server:
+  port: 8673
+ 
+spring:
+  application:
+    name: services-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: book
+        uri: lb://eureka-client-book
+        predicates:
+        - Path=/book/*
+      - id: user
+        uri: lb://eureka-client-user
+        predicates:
+        - Path=/user/*
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:123@peer2:8762/eureka, http://user:123@peer1:8761/eureka
+  instance:
+    prefered-ip-address: true
+  
+        
